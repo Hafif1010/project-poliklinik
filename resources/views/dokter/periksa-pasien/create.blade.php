@@ -11,49 +11,52 @@
         <form action="{{ route('periksa-pasien.store') }}" method="POST">
             @csrf
 
-            <input type="hidden" name="id_daftar_poli" value="{{ $daftarPoli->id ?? '' }}">
+            <input type="hidden" name="id_daftar_poli" value="{{ $daftarPoli->id }}">
 
             <div class="space-y-4">
                 {{-- Nama Pasien --}}
                 <div class="form-control">
                     <label class="label font-semibold text-xs text-slate-600">Nama Pasien</label>
-                    <input type="text" 
-                           value="{{ $daftarPoli->pasien->nama ?? $daftarPoli->pasien->name ?? '' }}" 
-                           class="input input-bordered w-full rounded-lg bg-slate-100 text-slate-600" 
+                    <input type="text"
+                           value="{{ $daftarPoli->pasien->nama ?? '' }}"
+                           class="input input-bordered w-full rounded-lg bg-slate-100 text-slate-600"
                            disabled />
                 </div>
 
-                {{-- Tgl Periksa --}}
+                {{-- Keluhan --}}
                 <div class="form-control">
-                    <label class="label font-semibold text-xs text-slate-600">Tanggal Periksa</label>
-                    <input type="datetime-local" 
-                           name="tgl_periksa" 
-                           value="{{ date('Y-m-d\TH:i') }}" 
-                           class="input input-bordered w-full rounded-lg" 
-                           required />
+                    <label class="label font-semibold text-xs text-slate-600">Keluhan Pasien</label>
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm text-slate-600">
+                        {{ $daftarPoli->keluhan ?: 'Tidak ada keluhan.' }}
+                    </div>
                 </div>
 
-                {{-- Catatan --}}
+                {{-- Catatan Dokter --}}
                 <div class="form-control">
                     <label class="label font-semibold text-xs text-slate-600">Catatan Dokter</label>
-                    <textarea name="catatan" 
-                              class="textarea textarea-bordered w-full rounded-lg" 
-                              rows="3" 
-                              placeholder="Masukkan resep atau catatan medis..." 
-                              required></textarea>
+                    <textarea name="catatan"
+                              class="textarea textarea-bordered w-full rounded-lg"
+                              rows="3"
+                              placeholder="Masukkan diagnosis atau catatan medis...">{{ old('catatan') }}</textarea>
+                    @error('catatan')
+                        <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 {{-- Pilih Obat --}}
                 <div class="form-control">
                     <label class="label font-semibold text-xs text-slate-600">Obat yang Diberikan</label>
-                    <select name="obat[]" class="select select-bordered w-full rounded-lg" multiple required>
+                    <select name="obat[]" class="select select-bordered w-full rounded-lg" multiple required style="min-height: 150px">
                         @foreach($obats ?? [] as $obat)
-                            <option value="{{ $obat->id }}">
-                                {{ $obat->nama_obat }} - Rp {{ number_format($obat->harga, 0, ',', '.') }}
+                            <option value="{{ $obat->id }}" {{ in_array($obat->id, old('obat', [])) ? 'selected' : '' }}>
+                                {{ $obat->nama_obat }} ({{ $obat->kemasan }}) — Rp {{ number_format($obat->harga, 0, ',', '.') }}
                             </option>
                         @endforeach
                     </select>
-                    <span class="text-xs text-slate-400 mt-1">*Tahan tombol Ctrl / Cmd untuk memilih lebih dari 1 obat</span>
+                    <span class="text-xs text-slate-400 mt-1">*Tahan Ctrl / Cmd untuk memilih lebih dari 1 obat</span>
+                    @error('obat')
+                        <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 

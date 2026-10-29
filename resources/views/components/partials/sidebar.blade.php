@@ -75,6 +75,12 @@
                 <i class="fas fa-pills w-4 text-center"></i>
                 Manajemen Obat
             </a>
+
+            <a href="{{ route('admin.pembayaran.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('admin.pembayaran*') ? $active : $inactive }}">
+                <i class="fas fa-money-check-dollar w-4 text-center"></i>
+                Verifikasi Pembayaran
+            </a>
         </div>
         @endif
 
@@ -97,6 +103,18 @@
                 class="{{ $baseLink }} {{ request()->routeIs('pasien.daftar*') ? $active : $inactive }}">
                 <i class="fas fa-hospital-user w-4 text-center"></i>
                 Pendaftaran Periksa
+            </a>
+
+            <a href="{{ route('pasien.riwayat.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.riwayat*') ? $active : $inactive }}">
+                <i class="fas fa-clock-rotate-left w-4 text-center"></i>
+                Riwayat Pendaftaran
+            </a>
+
+            <a href="{{ route('pasien.pembayaran.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('pasien.pembayaran*') ? $active : $inactive }}">
+                <i class="fas fa-credit-card w-4 text-center"></i>
+                Pembayaran
             </a>
         </div>
         @endif
@@ -135,6 +153,34 @@
             </a>
         </div>
         @endif
+
+        {{-- ================= AKUN (SEMUA ROLE) ================= --}}
+        <div class="mt-4 pt-4 border-t border-white/10">
+            <p class="text-xs font-bold uppercase tracking-widest text-indigo-400 px-3 mb-3">
+                Akun
+            </p>
+
+            <div class="space-y-1">
+                <a href="{{ route('notifikasi.index') }}"
+                    class="{{ $baseLink }} {{ request()->routeIs('notifikasi*') ? $active : $inactive }}">
+                    <i class="fas fa-bell w-4 text-center"></i>
+                    Notifikasi
+                    @auth
+                        @php $sidebarUnread = auth()->user()->unreadNotifications()->count(); @endphp
+                        @if($sidebarUnread > 0)
+                            <span class="ml-auto min-w-[20px] h-5 flex items-center justify-center rounded-full bg-red-500 text-white text-[10px] font-bold px-1">
+                                {{ $sidebarUnread > 99 ? '99+' : $sidebarUnread }}
+                            </span>
+                        @endif
+                    @endauth
+                </a>
+                <a href="{{ route('profile.edit') }}"
+                    class="{{ $baseLink }} {{ request()->routeIs('profile.*') ? $active : $inactive }}">
+                    <i class="fas fa-key w-4 text-center"></i>
+                    Ganti Password
+                </a>
+            </div>
+        </div>
 
     </div>
 

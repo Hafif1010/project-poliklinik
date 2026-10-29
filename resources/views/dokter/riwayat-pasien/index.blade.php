@@ -5,6 +5,10 @@
         <h2 class="text-2xl font-bold text-slate-800">
             Riwayat Pasien
         </h2>
+        <a href="{{ route('export.riwayat-pasien') }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-semibold transition">
+            <i class="fas fa-file-excel text-sm"></i>
+            Export Excel
+        </a>
     </div>
 
     {{-- Card --}}

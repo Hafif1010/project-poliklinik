@@ -1,9 +1,15 @@
 <x-layouts.app title="Data Obat">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold text-slate-800">Data Obat</h2>
-        <a href="{{ route('obat.create') }}" class="btn bg-[#2d4499] text-white border-none rounded-lg px-5">
-            <i class="fas fa-plus"></i> Tambah Obat
-        </a>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('export.obat') }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-semibold transition">
+                <i class="fas fa-file-excel text-sm"></i>
+                Export Excel
+            </a>
+            <a href="{{ route('obat.create') }}" class="btn bg-[#2d4499] text-white border-none rounded-lg px-5">
+                <i class="fas fa-plus"></i> Tambah Obat
+            </a>
+        </div>
     </div>
 
     @if(session('success'))
